@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zad1</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <script>
+        var svg = d3.select("body")
+         .append("svg")
+         .attr("width", "1024")
+         .attr("height", "768");
+
+        var rect = svg.append("rect")
+         .attr("x" , 100)
+         .attr("y" , 100)
+         .attr("width", "100")
+         .attr("height", "100")
+         .attr("fill", "none")
+         .attr("stroke", "red");
+
+        rect.transition()
+         .delay(3000)
+         .duration(5000)
+         .ease(d3.easeLinear)
+         .attr("fill", "yellow");
+
+        rect.transition()
+         .delay(5000)
+         .duration(5000)
+         .ease(d3.easeLinear)
+         .attr("width", "200")
+         .transition()
+         .duration(5000)
+         .attr("width", 200)
+         .style("opacity", 0);
+    </script>
+</body>
+</html>

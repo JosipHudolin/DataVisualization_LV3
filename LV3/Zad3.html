@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zad3</title>
+  <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+  <script>
+
+    const widthSVG = 500;
+    const heightSVG = 500;
+    const widthRect = 100;
+    const heightRect = 50;
+
+    var svg = d3.select("body")
+     .append("svg")
+     .attr("width", widthSVG)
+     .attr("height", heightSVG);
+
+    var rect = svg.append("rect")
+     .attr("x", "400")
+     .attr("y", "450")
+     .attr("width", "100")
+     .attr("height", "50")
+     .attr("fill", "blue");
+
+    rect.transition()
+      .duration(1000)
+      .attr("transform", "translate(0, 450)")
+      .transition()
+      .duration(1000)
+      .attr("transform", "translate(0, 0)");
+
+  </script>
+</body>
+</html>

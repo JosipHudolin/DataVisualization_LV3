@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulacija slobodnog pada</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+
+<body>
+    <script>
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", "500")
+            .attr("height", "500");
+
+        var circle1 = svg.append("circle")
+            .attr("id", "circle1")
+            .attr("cx", "100")
+            .attr("cy", "50")
+            .attr("r", "20")
+            .attr("fill", "red");
+
+        var circle2 = svg.append("circle")
+            .attr("id", "circle2")
+            .attr("cx", "250")
+            .attr("cy", "50")
+            .attr("r", "20")
+            .attr("fill", "green");
+
+        var circle3 = svg.append("circle")
+            .attr("id", "circle3")
+            .attr("cx", "400")
+            .attr("cy", "50")
+            .attr("r", "20")
+            .attr("fill", "blue");
+
+        var rectangle1 = svg.append("rect")
+            .attr("id", "rectangle1")
+            .attr("x", "50")
+            .attr("y", "400")
+            .attr("width", "100")
+            .attr("height", "50")
+            .attr("class", "solid")
+            .attr("fill", "brown");
+
+        var rectangle2 = svg.append("rect")
+            .attr("id", "rectangle2")
+            .attr("x", "200")
+            .attr("y", "400")
+            .attr("width", "100")
+            .attr("height", "50")
+            .attr("class", "elastic")
+            .attr("fill", "yellow");
+
+        var rectangle3 = svg.append("rect")
+            .attr("id", "rectangle3")
+            .attr("x", "350")
+            .attr("y", "400")
+            .attr("width", "100")
+            .attr("height", "50")
+            .attr("class", "liquid")
+            .attr("fill", "cyan");
+
+        function freeFall(circleId, rectangleId) {
+            const circleElement = d3.select("#" + circleId);
+            const rectangleElement = d3.select("#" + rectangleId);
+
+            let circleY = parseFloat(circleElement.attr('cy'));
+            const circleRadius = parseFloat(circleElement.attr('r'));
+            const rectY = parseFloat(rectangleElement.attr('y'));
+            const rectHeight = parseFloat(rectangleElement.attr('height'));
+
+            let gravity = 1;
+
+            const animationInterval = setInterval(() => {
+                circleY += gravity * 5;
+
+                if (circleY + circleRadius >= rectY) {
+                    if (rectangleElement.classed("solid")) {
+                        if (circleY + circleRadius >= rectY) {
+                            circleElement.attr('cy', rectY - circleRadius);
+                            clearInterval(animationInterval);
+                            rectangleElement.attr('fill', 'black');
+                            return;
+                        }
+                    } else if (rectangleElement.classed("elastic")) {
+                        if (circleY + circleRadius >= rectY) {
+                            circleY = rectY - circleRadius;
+                            circleElement.attr('cy', circleY);
+                            gravity *= -0.8;
+                        }
+                    } else if (rectangleElement.classed("liquid")) {
+                    }
+                }
+
+                if (circleY + circleRadius >= rectY + rectHeight) {
+                    clearInterval(animationInterval);
+                    circleElement.attr('cy', rectY + rectHeight - circleRadius);
+                    rectangleElement.attr('fill', 'black');
+                } else {
+                    circleElement.attr('cy', circleY);
+                }
+            }, 100);
+        }
+
+
+
+
+
+        freeFall("circle1", "rectangle1");
+        freeFall("circle2", "rectangle2");
+        freeFall("circle3", "rectangle3");
+    </script>
+</body>
+
+</html>
